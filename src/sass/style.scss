@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+}
+
+header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(76,74,180);
+}
+
+input {
+    height: 21px;
+}
+
+.btn {
+    padding: 0;
+    position: relative;
+    top: 4px;
+}
