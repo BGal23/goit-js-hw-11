@@ -1,19 +1,24 @@
 import {getPhotos} from "./api.js"
 
-const searchBtn = document.querySelector("button");
-const photoBox = document.querySelector(".gallery")
+const searchBtn = document.querySelector(".btn-search");
+const moreBtn = document.querySelector(".btn-more")
+const photoBox = document.querySelector(".gallery");
+let pageNumber = 1
+let photoArray = []
 
 const createGallery = (event) => {
     event.preventDefault()
     const input = document.querySelector("input").value;
 
-    getPhotos(input)
+    if (photoArray.length > 0) {
+        pageNumber++
+    }
+    getPhotos(input, pageNumber)
     .then (data => {
-        let photoArray = []
         data.map(element => { 
             let newPhoto = `
             <div class="photo-card">
-                <img src="${element.webformatURL}" alt="${element.tags}" loading="lazy" />
+                <img src="${element.webformatURL}" alt="${element.tags}" loading="lazy"/>
                 <div class="info">
                     <p class="info-item">
                     <b>Likes </b>${element.likes}
@@ -39,3 +44,4 @@ const createGallery = (event) => {
 }
 
 searchBtn.addEventListener("click", createGallery)
+moreBtn.addEventListener("click", createGallery)

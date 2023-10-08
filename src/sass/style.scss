@@ -14,12 +14,57 @@ input {
     height: 21px;
 }
 
-.btn {
+.btn-search {
     padding: 0;
     position: relative;
     top: 4px;
 }
 
-// .gallery {
-//     margin: 20px;
-// }
+.btn-more {
+    width: 100px;
+    padding: 3px;
+    position: relative;
+    left: calc(50vw - 50px);
+    background-color: rgba(76,74,180);
+    color: white;
+    margin-bottom: 20px;
+}
+
+
+.gallery {
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .photo-card {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid lightgrey;
+
+        &:hover {
+            scale: 1.1;
+            cursor: zoom-in;
+        }
+        
+    }
+        img {
+            height: 170px;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            font-size: small;
+            gap: 5px;
+
+            .info-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    }
