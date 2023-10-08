@@ -14,5 +14,4 @@ const getPhotos = (input) => {
     })
 }
 
-
 export {getPhotos}
