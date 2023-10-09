@@ -2,6 +2,7 @@ import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 import Notiflix from 'notiflix'
 import {getPhotos} from "./api.js"
+import { changeMode } from "./darkmode.js";
 
 const searchBtn = document.querySelector(".btn-search");
 const moreBtn = document.querySelector(".btn-more")
