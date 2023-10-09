@@ -42,19 +42,20 @@ input {
     gap: 15px;
 
     .photo-card {
-        width: 300px;
         display: flex;
         flex-direction: column;
         border: 1px solid lightgrey;
 
         &:hover {
             scale: 1.1;
-            cursor: zoom-in;
         }
         
     }
-        img {
+        a img {
+            width: 300px;
             height: 180px;
+            object-fit: cover;
+            cursor: zoom-in;
         }
 
         .info {

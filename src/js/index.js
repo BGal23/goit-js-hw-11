@@ -1,3 +1,6 @@
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+import Notiflix from 'notiflix'
 import {getPhotos} from "./api.js"
 
 const searchBtn = document.querySelector(".btn-search");
@@ -35,7 +38,9 @@ const createGallery = (event) => {
         data.hits.map(element => { 
             let newPhoto = `
             <div class="photo-card">
-                <img src="${element.webformatURL}" alt="${element.tags}" loading="lazy"/>
+                <a href="${element.largeImageURL}">
+                    <img src="${element.webformatURL}" alt="${element.tags}" loading="lazy"/>
+                </a>
                 <div class="info">
                     <p class="info-item">
                     <b>Likes </b>${element.likes}
@@ -53,16 +58,23 @@ const createGallery = (event) => {
             </div>`
             photoArray.push(newPhoto)
         })
+
         if (photoArray.length === 0) {
             photoBox.style.display = "block"
             photoBox.innerHTML = '<p style="text-align:center;">Sorry, there are no images matching your search query. Please try again.</p>'
             moreBtn.style.display = "none"
+            Notiflix.Notify.failure(`Sorry, We found ${data.totalHits} images.. Please try again.`);
         }
         else {
-        photoBox.style.display = "flex"
-        photoBox.innerHTML = photoArray.join("")
-        checkInput = input.value
-        moreBtn.style.display = "block"
+            photoBox.style.display = "flex"
+            photoBox.innerHTML = photoArray.join("")
+            checkInput = input.value
+            moreBtn.style.display = "block"
+            const showPhoto = new SimpleLightbox("a")
+
+            if (pageNumber === 1) {
+                Notiflix.Notify.success(`Hooray! We found ${data.totalHits} images.`);
+            }
 
             if (photoArray.length === data.totalHits) {
                 limit.style.display = "block"
