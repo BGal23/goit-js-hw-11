@@ -3,17 +3,32 @@ import {getPhotos} from "./api.js"
 const searchBtn = document.querySelector(".btn-search");
 const moreBtn = document.querySelector(".btn-more")
 const photoBox = document.querySelector(".gallery");
-let pageNumber = 1
+let input = document.querySelector("input");
+let pageNumber = 0
 let photoArray = []
+let checkInput;
+
+const inputOn = () => {
+    if (input.value !== "") {
+        searchBtn.removeAttribute("disabled", "")
+    }
+    else {
+        searchBtn.setAttribute("disabled", "")
+    }
+}
 
 const createGallery = (event) => {
     event.preventDefault()
-    const input = document.querySelector("input").value;
-
-    if (photoArray.length > 0) {
-        pageNumber++
+    searchBtn.setAttribute("disabled", "")
+    input = document.querySelector("input");
+    
+    if (checkInput !== input.value) {
+        photoArray = []
+        pageNumber = 0
     }
-    getPhotos(input, pageNumber)
+    pageNumber++
+
+    getPhotos(input.value, pageNumber)
     .then (data => {
         data.map(element => { 
             let newPhoto = `
@@ -37,11 +52,15 @@ const createGallery = (event) => {
             photoArray.push(newPhoto)
         })
         photoBox.innerHTML = photoArray.join("")
+        checkInput = input.value
         })
         .catch (error => {
             console.log(error)
         })
+        
+    moreBtn.style.display = "block"
 }
 
+input.addEventListener("input", inputOn)
 searchBtn.addEventListener("click", createGallery)
 moreBtn.addEventListener("click", createGallery)
