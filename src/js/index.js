@@ -4,12 +4,13 @@ const searchBtn = document.querySelector(".btn-search");
 const moreBtn = document.querySelector(".btn-more")
 const photoBox = document.querySelector(".gallery");
 let input = document.querySelector("input");
+const limit = document.querySelector(".limit")
 let pageNumber = 0
 let photoArray = []
 let checkInput;
 
 const inputOn = () => {
-    if (input.value !== "") {
+    if (input.value !== "" & input.value !== checkInput) {
         searchBtn.removeAttribute("disabled", "")
     }
     else {
@@ -21,6 +22,7 @@ const createGallery = (event) => {
     event.preventDefault()
     searchBtn.setAttribute("disabled", "")
     input = document.querySelector("input");
+    limit.style.display = "none"
     
     if (checkInput !== input.value) {
         photoArray = []
@@ -30,7 +32,7 @@ const createGallery = (event) => {
 
     getPhotos(input.value, pageNumber)
     .then (data => {
-        data.map(element => { 
+        data.hits.map(element => { 
             let newPhoto = `
             <div class="photo-card">
                 <img src="${element.webformatURL}" alt="${element.tags}" loading="lazy"/>
@@ -51,14 +53,26 @@ const createGallery = (event) => {
             </div>`
             photoArray.push(newPhoto)
         })
+        if (photoArray.length === 0) {
+            photoBox.style.display = "block"
+            photoBox.innerHTML = '<p style="text-align:center;">Sorry, there are no images matching your search query. Please try again.</p>'
+            moreBtn.style.display = "none"
+        }
+        else {
+        photoBox.style.display = "flex"
         photoBox.innerHTML = photoArray.join("")
         checkInput = input.value
-        })
+        moreBtn.style.display = "block"
+
+            if (photoArray.length === data.totalHits) {
+                limit.style.display = "block"
+                moreBtn.style.display = "none"
+            }
+        }})
         .catch (error => {
             console.log(error)
         })
         
-    moreBtn.style.display = "block"
 }
 
 input.addEventListener("input", inputOn)

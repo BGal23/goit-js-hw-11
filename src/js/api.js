@@ -8,7 +8,7 @@ const getPhotos = (input, pageNumber) => {
         &image_type=photo&orientation=horizontal&safesearch=true
         &per_page=40&page=${pageNumber}`)
     .then(respons => {
-        return respons.data.hits
+        return respons.data
     })
 }
 
